@@ -37,6 +37,7 @@
     finaleStarted: false,
     letterShown: false,
     finalShown: false,
+    speedMultiplier: 1.0,
     audioMuted: false,
     audioStarted: false,
     scrollAccum: 0,
@@ -579,19 +580,94 @@
     ui.ending = el("div", "jy-ending", ui.overlay);
     ui.endingBtn = el("button", "jy-ending-btn", ui.ending, cfg.ending.stayButton || "Ở lại đây thêm một chút");
 
-    // Progress bar HUD
-    ui.progress = el("div", "jy-progress", ui.overlay);
-    ui.progressBar = el("div", "jy-progress-bar", ui.progress);
+    // Control Bar HUD (Bottom)
+    ui.controlBar = el("div", "jy-control-bar", ui.overlay);
 
-    // Audio toggle
-    ui.audioBtn = el("button", "jy-audio-btn", ui.overlay, "♪");
-    ui.audioBtn.addEventListener("click", () => {
+    // Left: Chapter Navigation
+    const ctrlChapters = el("div", "jy-ctrl-chapters", ui.controlBar);
+    ui.btnPrevCh = el("button", "jy-btn-nav jy-btn-prev", ctrlChapters, "◀");
+    ui.btnPrevCh.title = "Chương trước";
+
+    const tabsWrap = el("div", "jy-chapter-tabs", ctrlChapters);
+    ui.chapterTabs = [];
+    const roman = ["I", "II", "III", "IV"];
+    for (let c = 0; c < 4; c++) {
+      const tab = el("button", "jy-tab-ch" + (c === 0 ? " active" : ""), tabsWrap, roman[c]);
+      tab.title = cfg.chapters[c]?.title || `Chương ${roman[c]}`;
+      const chIdx = c;
+      tab.addEventListener("click", (e) => {
+        e.stopPropagation();
+        jumpToChapter(chIdx, cfg, ui);
+      });
+      ui.chapterTabs.push(tab);
+    }
+
+    ui.btnNextCh = el("button", "jy-btn-nav jy-btn-next", ctrlChapters, "▶");
+    ui.btnNextCh.title = "Chương sau";
+
+    ui.btnPrevCh.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const prev = (S.chapterIdx - 1 + 4) % 4;
+      jumpToChapter(prev, cfg, ui);
+    });
+    ui.btnNextCh.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const next = (S.chapterIdx + 1) % 4;
+      jumpToChapter(next, cfg, ui);
+    });
+
+    // Center: Chapter Title
+    const ctrlInfo = el("div", "jy-ctrl-info", ui.controlBar);
+    ui.currentChapterTitle = el("span", "jy-current-chapter-title", ctrlInfo, `Chương I: ${cfg.chapters[0]?.title || "Ngày chúng ta bắt đầu"}`);
+
+    // Right: Actions (Speed, Play/Pause, Audio)
+    const ctrlActions = el("div", "jy-ctrl-actions", ui.controlBar);
+
+    // Speed button
+    const speeds = [1.0, 2.5, 5.0];
+    const speedLabels = ["⚡ 1x", "⚡ 2.5x", "⚡ 5x"];
+    let speedIdx = 0;
+    ui.btnSpeed = el("button", "jy-btn-speed", ctrlActions, "⚡ 1x");
+    ui.btnSpeed.title = "Tốc độ thuyền";
+    ui.btnSpeed.addEventListener("click", (e) => {
+      e.stopPropagation();
+      speedIdx = (speedIdx + 1) % speeds.length;
+      S.speedMultiplier = speeds[speedIdx];
+      ui.btnSpeed.textContent = speedLabels[speedIdx];
+      const v = window.__v;
+      if (v && v.rig && !S.paused) {
+        v.rig.speedT = JOURNEY_SPEED * S.speedMultiplier;
+      }
+      audio.playTone(440 * (1 + speedIdx * 0.4), 0.15, 0.4);
+    });
+
+    // Play/Pause button
+    ui.btnPlayPause = el("button", "jy-btn-playpause", ctrlActions, "⏸");
+    ui.btnPlayPause.title = "Tạm dừng / Tiếp tục";
+    ui.btnPlayPause.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (S.paused) {
+        S.paused = false;
+        ui.btnPlayPause.textContent = "⏸";
+        audio.playTone(523.25, 0.12, 0.3);
+      } else {
+        S.paused = true;
+        ui.btnPlayPause.textContent = "▶";
+        audio.playTone(392.0, 0.12, 0.3);
+      }
+    });
+
+    // Audio button
+    ui.btnAudio = el("button", "jy-btn-audio-ctrl", ctrlActions, "♪");
+    ui.btnAudio.title = "Âm thanh";
+    ui.btnAudio.addEventListener("click", (e) => {
+      e.stopPropagation();
       if (S.audioMuted) {
         audio.unmute();
-        ui.audioBtn.classList.remove("muted");
+        ui.btnAudio.classList.remove("muted");
       } else {
         audio.mute();
-        ui.audioBtn.classList.add("muted");
+        ui.btnAudio.classList.add("muted");
       }
     });
 
@@ -647,6 +723,7 @@
 
       ui.introCta.addEventListener("click", startNow, { once: true });
       ui.introCta.addEventListener("touchend", (e) => { e.preventDefault(); startNow(e); }, { once: true });
+      ui.introCta.addEventListener("pointerdown", startNow, { once: true });
 
       const lines = cfg.intro.lines || [];
       const lineElements = [];
@@ -656,9 +733,9 @@
       });
 
       ui.intro.addEventListener("click", (e) => {
-        if (e.target === ui.introCta) return;
         lineElements.forEach(l => l.classList.add("visible"));
         ui.introCta.classList.add("visible");
+        startNow(e);
       });
 
       // Animate lines
@@ -698,7 +775,7 @@
 
     interceptRigReset(v);
 
-    ui.progress.classList.add("active");
+    if (ui.controlBar) ui.controlBar.classList.add("active");
     setupScrollControl(cfg, ui, v);
 
     ui.scrollHint.classList.add("active");
@@ -724,7 +801,7 @@
         rig.speed = 0;
         rig.speedT = 0;
       } else if (S.phase === "journey") {
-        rig.speedT = JOURNEY_SPEED + (S.scrollAccum > 0 ? S.scrollAccum * 2.5 : 0);
+        rig.speedT = JOURNEY_SPEED * S.speedMultiplier + (S.scrollAccum > 0 ? S.scrollAccum * 2.5 : 0);
       } else if (S.phase === "ending") {
         rig.speedT = 0.55;
       }
@@ -817,6 +894,25 @@
       ui.progressBar.style.width = (S.journeyProgress * 100) + "%";
     }
 
+    // Dynamic chapter tab sync
+    let curCh = 0;
+    if (rig.z > 95) curCh = 0;
+    else if (rig.z > 0) curCh = 1;
+    else if (rig.z > -150) curCh = 2;
+    else curCh = 3;
+
+    if (curCh !== S.chapterIdx) {
+      S.chapterIdx = curCh;
+      if (ui.chapterTabs) {
+        ui.chapterTabs.forEach((tab, i) => tab.classList.toggle("active", i === curCh));
+      }
+      const roman = ["I", "II", "III", "IV"];
+      const ch = cfg.chapters[curCh];
+      if (ui.currentChapterTitle && ch) {
+        ui.currentChapterTitle.textContent = `Chương ${roman[curCh]}: ${ch.title || ""}`;
+      }
+    }
+
     // Day/night smooth tracking
     if (!S.paused && S.phase === "journey") {
       const targetU = journeyDayU(S.journeyProgress);
@@ -833,6 +929,58 @@
     checkTorii(cfg, ui);
     checkFutureZone(cfg, ui);
     checkFinale(cfg, ui);
+  }
+
+
+  /* ── jump to chapter ── */
+  function jumpToChapter(idx, cfg, ui) {
+    if (idx < 0 || idx >= 4) return;
+    S.chapterIdx = idx;
+
+    // Reset modals if open
+    if (S.activeMemory) {
+      ui.memory.className = "jy-memory";
+      S.activeMemory = null;
+    }
+    ui.constellation.className = "jy-constellation";
+    ui.letter.className = "jy-letter";
+    ui.final.className = "jy-final";
+
+    S.paused = false;
+    S.phase = "journey";
+    S.finaleStarted = false;
+    if (ui.btnPlayPause) ui.btnPlayPause.textContent = "⏸";
+
+    // Coordinates and sky dayU per chapter
+    const chapterZ = [142, 45, -30, -250];
+    const chapterU = [0.70, 0.75, 0.86, 0.945];
+
+    const v = window.__v;
+    if (v && v.rig) {
+      const targetZ = chapterZ[idx];
+      v.rig.z = targetZ;
+      if (v.rig.pos) v.rig.pos.z = targetZ;
+      v.rig.speedT = JOURNEY_SPEED * S.speedMultiplier;
+      v.rig.manualT = 999999;
+      S.dayU = chapterU[idx];
+      v.setDay(chapterU[idx], 0);
+    }
+
+    // Update active tab & title
+    if (ui.chapterTabs) {
+      ui.chapterTabs.forEach((tab, i) => {
+        tab.classList.toggle("active", i === idx);
+      });
+    }
+    const roman = ["I", "II", "III", "IV"];
+    const ch = cfg.chapters[idx];
+    if (ui.currentChapterTitle && ch) {
+      ui.currentChapterTitle.textContent = `Chương ${roman[idx]}: ${ch.title || ""}`;
+    }
+
+    // Show chapter banner
+    if (ch) showChapter(ch, ui);
+    audio.playTone(523.25, 0.2, 0.8);
   }
 
   /* ── chapters ── */
