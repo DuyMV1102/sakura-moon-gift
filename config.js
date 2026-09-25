@@ -46,7 +46,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/01.jpg",
       title: "Ngày đầu tiên",
-      date: "12.08.2024",
+      date: "25.07.2026",
       caption: "Lúc này chắc cả hai đứa đều chưa biết người bên cạnh sẽ trở nên quan trọng đến thế.",
       location: "Góc quán quen, Hà Nội",
       type: "lantern",
@@ -55,7 +55,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/02.jpg",
       title: "Nụ cười chiều thu",
-      date: "25.08.2024",
+      date: "25.07.2026",
       caption: "Ánh mắt em chiều hôm ấy, anh cất vào tim từ lúc nào chẳng hay.",
       location: "Ven bờ hồ Tây",
       type: "reflection",
@@ -64,7 +64,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/03.jpg",
       title: "Cái nắm tay ngập ngừng",
-      date: "08.09.2024",
+      date: "25.07.2026",
       caption: "Lần đầu tay chạm tay, cả hai đều vờ như vô tình nhưng tim thì đập rất nhanh.",
       location: "Con đường rợp lá rụng",
       type: "bridge",
@@ -73,7 +73,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/04.jpg",
       title: "Dưới tán hoa đầu mùa",
-      date: "22.09.2024",
+      date: "26.07.2026",
       caption: "Cánh hoa rơi vương trên tóc em, tự nhiên thấy lòng dịu lại sau những ngày bận rộn.",
       location: "Vườn hoa anh đào",
       type: "sakura",
@@ -82,7 +82,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/05.jpg",
       title: "Gặp nhau trên cầu đá",
-      date: "10.10.2024",
+      date: "26.07.2026",
       caption: "Mưa rơi ướt vai áo anh, nhưng em luôn khô ráo và an tâm nép bên cạnh.",
       location: "Cây cầu đá thung lũng",
       type: "bridge",
@@ -91,7 +91,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/06.jpg",
       title: "Những quán quen không tên",
-      date: "05.11.2024",
+      date: "26.07.2026",
       caption: "Món ăn có thể giản đơn, nhưng tiếng cười của em làm tất cả trở nên đặc biệt.",
       location: "Góc phố đèn vàng",
       type: "lantern",
@@ -100,7 +100,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/07.jpg",
       title: "Chuyến đi xa đầu tiên",
-      date: "24.12.2024",
+      date: "28.07.2026",
       caption: "Đứng giữa mây trời thênh thang, anh nhận ra thế giới rộng lớn nhưng vừa vặn khi có em.",
       location: "Đỉnh đồi mờ sương",
       type: "lantern",
@@ -109,7 +109,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/08.jpg",
       title: "Mặt nước lặng yên",
-      date: "18.01.2025",
+      date: "06.08.2026",
       caption: "Sóng khẽ gợn, phản chiếu bóng hai đứa. Anh thầm mong thời gian cứ ngừng lại lúc này.",
       location: "Hồ vắng lúc hoàng hôn muộn",
       type: "reflection",
@@ -118,7 +118,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/09.jpg",
       title: "Khoảnh khắc bình yên",
-      date: "14.02.2025",
+      date: "06.08.2026",
       caption: "Anh ước cho mọi năm tháng về sau, người cùng anh ngắm trăng luôn là em.",
       location: "Gốc cây ước nguyện",
       type: "sakura",
@@ -127,7 +127,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/10.jpg",
       title: "Ở đây, cùng một vòm trời",
-      date: "15.05.2025",
+      date: "09.08.2026",
       caption: "Dù cuộc sống có trôi nhanh đến đâu, dừng lại bên em luôn là chốn bình yên nhất.",
       location: "Đêm trăng thanh tĩnh",
       type: "lantern",
@@ -136,7 +136,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     {
       image: "./memories/11.jpg",
       title: "Lời hứa của anh",
-      date: "20.07.2025",
+      date: "09.08.2026",
       caption: "Không hứa những điều viển vông, chỉ hứa sẽ luôn nắm chặt tay em qua mọi thăng trầm.",
       location: "Bến sông trăng",
       type: "lantern",
@@ -155,7 +155,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
 
   // Important dates for constellation
   importantDates: [
-    { date: "12.08.2024", label: "Ngày chúng ta gặp nhau" },
+    { date: "25.07.2026", label: "Ngày chúng ta gặp nhau" },
     { date: "05.10.2024", label: "Chuyến đi đầu tiên" },
   ],
 
