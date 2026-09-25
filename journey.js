@@ -877,11 +877,11 @@
       rig.speedT = 0;
     } else if (S.phase === "journey") {
       if (S.scrollAccum > 0.01) {
-        rig.speedT = JOURNEY_SPEED + S.scrollAccum * 2.8;
+        rig.speedT = JOURNEY_SPEED * S.speedMultiplier + S.scrollAccum * 2.8;
         S.scrollAccum *= 0.92;
         if (S.scrollAccum < 0.01) S.scrollAccum = 0;
       } else {
-        rig.speedT = JOURNEY_SPEED;
+        rig.speedT = JOURNEY_SPEED * S.speedMultiplier;
       }
     }
 
