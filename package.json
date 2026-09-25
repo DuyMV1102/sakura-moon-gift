@@ -1,0 +1,19 @@
+{
+  "name": "sakura-river-valley",
+  "version": "1.0.0",
+  "description": "Real-time 3D mountain river valley in feudal East Asia at golden hour, built with Three.js and custom procedural shaders.",
+  "scripts": {
+    "start": "python3 server.py --port 3000",
+    "dev": "npx vite --port 3000",
+    "serve": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "threejs",
+    "webgl",
+    "3d",
+    "shaders",
+    "procedural"
+  ],
+  "author": "Meng To (Original), cloned by Hermes Agent",
+  "license": "MIT"
+}
