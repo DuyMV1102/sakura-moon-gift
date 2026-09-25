@@ -532,21 +532,29 @@
     ui.chapterSub = el("div", "jy-chapter-sub", ui.chapter);
     ui.chapterTitle = el("div", "jy-chapter-title", ui.chapter);
 
-    // Nearby memory prompt button
+    // Nearby memory prompt button (Center Screen Floating Beacon)
     ui.memoryPrompt = el("div", "jy-memory-prompt", ui.overlay);
-    ui.memoryPrompt.style.cssText = "position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:rgba(14,18,28,0.85);border:1px solid rgba(229,195,136,0.5);border-radius:30px;padding:10px 22px;color:#fce6c9;font-size:14px;cursor:pointer;opacity:0;pointer-events:none;transition:all 0.4s ease;z-index:20;backdrop-filter:blur(8px);box-shadow:0 6px 25px rgba(0,0,0,0.6);";
-    ui.memoryPromptText = el("span", null, ui.memoryPrompt, "✦ Xem ký ức");
+    const promptMain = el("div", "jy-prompt-main", ui.memoryPrompt);
+    el("span", null, promptMain, "🏮");
+    ui.memoryPromptTitle = el("span", null, promptMain, "Ký ức gần bên");
+    el("div", "jy-prompt-hint", ui.memoryPrompt, "Chạm vào đây để mở khoảnh khắc ✦");
 
-    // Memory viewer
+    // Memory viewer (Artistic Photo Gallery Modal)
     ui.memory = el("div", "jy-memory", ui.overlay);
     ui.memoryInner = el("div", "jy-memory-inner", ui.memory);
-    ui.memoryImg = el("div", "jy-memory-img", ui.memoryInner);
+    ui.memoryCornerClose = el("button", "jy-memory-corner-close", ui.memoryInner, "✕");
+    ui.memoryCornerClose.title = "Đóng";
+
+    ui.memoryImgFrame = el("div", "jy-memory-img-frame", ui.memoryInner);
+    ui.memoryImg = el("div", "jy-memory-img", ui.memoryImgFrame);
+
     ui.memoryCaption = el("div", "jy-memory-caption", ui.memoryInner);
+    ui.memoryCaptionTag = el("div", "jy-memory-caption-tag", ui.memoryCaption, "✦ KHOẢNH KHẮC KỶ NIỆM ✦");
     ui.memoryCaptionTitle = el("div", "jy-memory-caption-title", ui.memoryCaption);
     ui.memoryCaptionDate = el("div", "jy-memory-caption-date", ui.memoryCaption);
     ui.memoryCaptionText = el("div", "jy-memory-caption-text", ui.memoryCaption);
-    ui.memoryClose = el("button", "jy-memory-close", ui.memoryInner, "✕ Tiếp tục trôi thuyền");
-    ui.memoryClose.style.cssText = "margin-top:16px;background:rgba(229,195,136,0.18);border:1px solid rgba(229,195,136,0.4);border-radius:24px;color:#ffdf9e;padding:8px 20px;font-size:13px;cursor:pointer;width:100%;transition:all 0.3s ease;";
+
+    ui.memoryContinueBtn = el("button", "jy-memory-continue-btn", ui.memoryInner, "Tiếp tục trôi thuyền ⛵");
 
     // Torii flash
     ui.toriiFlash = el("div", "jy-torii-flash", ui.overlay);
@@ -1006,8 +1014,7 @@
   /* ── memory triggers ── */
   function checkMemories(cfg, ui) {
     if (S.activeMemory !== null) {
-      ui.memoryPrompt.style.opacity = "0";
-      ui.memoryPrompt.style.pointerEvents = "none";
+      ui.memoryPrompt.classList.remove("active");
       return;
     }
 
@@ -1023,12 +1030,10 @@
 
     if (nearest && !nearest._viewed) {
       ui.memoryPrompt.userData = { memory: nearest };
-      ui.memoryPromptText.textContent = `✦ ${nearest.title || "Ký ức gần bên"} — Chạm để xem`;
-      ui.memoryPrompt.style.opacity = "1";
-      ui.memoryPrompt.style.pointerEvents = "auto";
+      if (ui.memoryPromptTitle) ui.memoryPromptTitle.textContent = `${nearest.title || "Ký ức gần bên"}`;
+      ui.memoryPrompt.classList.add("active");
     } else {
-      ui.memoryPrompt.style.opacity = "0";
-      ui.memoryPrompt.style.pointerEvents = "none";
+      ui.memoryPrompt.classList.remove("active");
     }
   }
 
@@ -1042,10 +1047,10 @@
 
     audio.playSfx("memopen");
 
-    // Set image
+    // Set image & details
     ui.memoryImg.style.backgroundImage = `url(${mem.image})`;
     ui.memoryCaptionTitle.textContent = mem.title || "";
-    ui.memoryCaptionDate.textContent = mem.date || "";
+    ui.memoryCaptionDate.textContent = `✦ ${mem.date || ""} • ${mem.location || "Sakura Valley"} ✦`;
     ui.memoryCaptionText.textContent = mem.caption || "";
 
     ui.memory.className = "jy-memory active type-" + (mem.type || "lantern");
@@ -1061,10 +1066,11 @@
         S.paused = false;
         mem._viewed = true;
         S.memoryIdx++;
-      }, 600);
+      }, 450);
     };
 
-    ui.memoryClose.onclick = close;
+    if (ui.memoryCornerClose) ui.memoryCornerClose.onclick = close;
+    if (ui.memoryContinueBtn) ui.memoryContinueBtn.onclick = close;
     ui.memory.onclick = (e) => {
       if (e.target === ui.memory) close();
     };
