@@ -44,7 +44,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
    */
   memories: [
     {
-      image: "/memories/01.jpg",
+      image: "./memories/01.jpg",
       title: "Ngày đầu tiên",
       date: "12.08.2024",
       caption: "Lúc này chắc cả hai đứa đều chưa biết người bên cạnh sẽ trở nên quan trọng đến thế.",
@@ -53,7 +53,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 0,
     },
     {
-      image: "/memories/02.jpg",
+      image: "./memories/02.jpg",
       title: "Nụ cười chiều thu",
       date: "25.08.2024",
       caption: "Ánh mắt em chiều hôm ấy, anh cất vào tim từ lúc nào chẳng hay.",
@@ -62,7 +62,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 0,
     },
     {
-      image: "/memories/03.jpg",
+      image: "./memories/03.jpg",
       title: "Cái nắm tay ngập ngừng",
       date: "08.09.2024",
       caption: "Lần đầu tay chạm tay, cả hai đều vờ như vô tình nhưng tim thì đập rất nhanh.",
@@ -71,7 +71,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 0,
     },
     {
-      image: "/memories/04.jpg",
+      image: "./memories/04.jpg",
       title: "Dưới tán hoa đầu mùa",
       date: "22.09.2024",
       caption: "Cánh hoa rơi vương trên tóc em, tự nhiên thấy lòng dịu lại sau những ngày bận rộn.",
@@ -80,7 +80,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 1,
     },
     {
-      image: "/memories/05.jpg",
+      image: "./memories/05.jpg",
       title: "Gặp nhau trên cầu đá",
       date: "10.10.2024",
       caption: "Mưa rơi ướt vai áo anh, nhưng em luôn khô ráo và an tâm nép bên cạnh.",
@@ -89,7 +89,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 1,
     },
     {
-      image: "/memories/06.jpg",
+      image: "./memories/06.jpg",
       title: "Những quán quen không tên",
       date: "05.11.2024",
       caption: "Món ăn có thể giản đơn, nhưng tiếng cười của em làm tất cả trở nên đặc biệt.",
@@ -98,7 +98,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 1,
     },
     {
-      image: "/memories/07.jpg",
+      image: "./memories/07.jpg",
       title: "Chuyến đi xa đầu tiên",
       date: "24.12.2024",
       caption: "Đứng giữa mây trời thênh thang, anh nhận ra thế giới rộng lớn nhưng vừa vặn khi có em.",
@@ -107,7 +107,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 2,
     },
     {
-      image: "/memories/08.jpg",
+      image: "./memories/08.jpg",
       title: "Mặt nước lặng yên",
       date: "18.01.2025",
       caption: "Sóng khẽ gợn, phản chiếu bóng hai đứa. Anh thầm mong thời gian cứ ngừng lại lúc này.",
@@ -116,7 +116,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 2,
     },
     {
-      image: "/memories/09.jpg",
+      image: "./memories/09.jpg",
       title: "Khoảnh khắc bình yên",
       date: "14.02.2025",
       caption: "Anh ước cho mọi năm tháng về sau, người cùng anh ngắm trăng luôn là em.",
@@ -125,7 +125,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 2,
     },
     {
-      image: "/memories/10.jpg",
+      image: "./memories/10.jpg",
       title: "Ở đây, cùng một vòm trời",
       date: "15.05.2025",
       caption: "Dù cuộc sống có trôi nhanh đến đâu, dừng lại bên em luôn là chốn bình yên nhất.",
@@ -134,7 +134,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 3,
     },
     {
-      image: "/memories/11.jpg",
+      image: "./memories/11.jpg",
       title: "Lời hứa của anh",
       date: "20.07.2025",
       caption: "Không hứa những điều viển vông, chỉ hứa sẽ luôn nắm chặt tay em qua mọi thăng trầm.",
@@ -143,7 +143,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
       chapter: 3,
     },
     {
-      image: "/memories/12.jpg",
+      image: "./memories/12.jpg",
       title: "Chiếc đèn lồng nguyện ước",
       date: "Đêm nay",
       caption: "Chiếc đèn lồng này gửi gắm tất cả những điều anh muốn nói với em.",
@@ -176,7 +176,7 @@ window.experienceConfig = (typeof window !== "undefined" && window.EXPERIENCE_CO
     closing: "Người luôn bên em",
   },
 
-  finalImage: "/memories/final.jpg",
+  finalImage: "./memories/final.jpg",
   finalText: "Trung thu vui vẻ, người anh yêu. 🌕",
 
   // Audio files (add later)
